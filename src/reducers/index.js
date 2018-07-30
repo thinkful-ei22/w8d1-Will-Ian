@@ -1,4 +1,4 @@
-import { ADD_GUESS } from '../actions';
+import { ADD_GUESS, NEW_GAME, SHOW_INFO } from '../actions';
 
 const initialState = {
     guesses: [],
@@ -48,5 +48,12 @@ export const guessReducer = (state = initialState, action) => {
                feedback,
                auralStatus: generateAuralUpdate(guesses, feedback)
             })
+    }
+    if (action.type === NEW_GAME){
+      return Object.assign({}, state, initialState);
+    }
+
+    if (action.type === SHOW_INFO){
+      return Object.assign({}, state, { showInfo: !state.showInfo })
     }
 }
