@@ -16,3 +16,10 @@ export const SHOW_INFO = 'SHOW_INFO';
 export const showInfo = () => ({
     type: SHOW_INFO
 });
+
+export const UPDATE_AURAL_STATUS = 'UPDATE_AURAL_STATUS';
+
+export const updateAuralStatus = () => ({
+    type: UPDATE_AURAL_STATUS,
+  
+})

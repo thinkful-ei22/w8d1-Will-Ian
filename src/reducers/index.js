@@ -1,8 +1,8 @@
-import { ADD_GUESS, NEW_GAME, SHOW_INFO } from '../actions';
+import { ADD_GUESS, NEW_GAME, SHOW_INFO, UPDATE_AURAL_STATUS } from '../actions';
 
 const initialState = {
     guesses: [],
-    correctAnswer: Math.round(Math.random() * 100) + 1,
+    correctAnswer: Math.floor(Math.random() * 100) + 1,
     feedback: 'Make your guess!',
     auralStatus: ''
 };
@@ -24,7 +24,7 @@ const makeGuess = function(guess) {
     return feedback;
 }
 
-const generateAuralUpdate = function(guesses, feedback) {
+const generateAuralUpdate = function(feedback, guesses) {
     // const { guesses, feedback } = initialState;
 
     // If there's not exactly 1 guess, we want to
@@ -34,7 +34,7 @@ const generateAuralUpdate = function(guesses, feedback) {
     let  auralStatus = `Here's the status of the game right now: ${feedback} You've made ${guesses.length} ${pluralize ? 'guesses' : 'guess'}.`;
 
     if (guesses.length > 0) {
-      auralStatus += ` ${pluralize ? 'In order of most- to least-recent, they are' : 'It was'}: ${guesses.reverse().join(', ')}`;
+      auralStatus += ` ${pluralize ? 'In order of most- to least-recent, they are' : 'It was'}: ${guesses.reverse().join(', ') }`;
     }
     return auralStatus;
   }
@@ -54,6 +54,11 @@ export const guessReducer = (state = initialState, action) => {
     }
 
     if (action.type === SHOW_INFO){
-      return Object.assign({}, state, { showInfo: !state.showInfo })
+      return Object.assign({}, state, { showInfo: !state.showInfo });
     }
+
+    if(action.type === UPDATE_AURAL_STATUS) {
+      return Object.assign({}, state, {auralStatus: generateAuralUpdate(state.feedback, state.guesses)});
+    }
+    return state;
 }
